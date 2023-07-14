@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<!-- Compiled and minified JavaScript -->
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+
+    <title>Results</title>
+</head>
+<script> 
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems);
+  });
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
+</script>
+<body style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+    <nav>
+        <div class="nav-wrapper" style="background:black;">
+            <a href="#" class="brand-logo">Polling Application</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li><a href="{% url 'index' %}">Questions</a></li>
+                <li><a href="{% url 'results' %}">Results</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    
+    <div class="container">
+        <h3 class="center-align">
+            Poll Results
+        </h3>
+    <ul class="collapsible">
+        {% for question in question_content  %}
+        <li>
+          <div class="collapsible-header">{{question.id}}. {{question.content}}</div>
+          <div class="collapsible-body">
+            {% for choice in question.choice_set.all  %}
+            <div class="row">
+                <span>{{choice.content}}<span class="badge blue">{{choice.vote}}</span></span> 
+                
+            </div>
+            
+            {% endfor %}
+        </div>
+        </li>
+        {% endfor %}
+    </ul>
+    </div> 
+    
+    
+            
+</body>
+</html>

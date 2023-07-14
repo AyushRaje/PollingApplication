@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+        <!-- Compiled and minified JavaScript -->
+        <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+            rel="stylesheet">
+        
+    <title>Question Page</title>
+    
+</head>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.collapsible');
+    var instances = M.Collapsible.init(elems);
+  });
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('.collapsible').collapsible();
+  });
+    </script>
+<body style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+    <nav>
+        <div class="nav-wrapper" style="background:black;">
+            <a href="#" class="brand-logo">Polling Application</a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li><a href="{% url 'index' %}">Questions</a></li>
+                <li><a href="{% url 'results' %}">Results</a></li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container">
+        <h3 class="center-align">
+            Top Questions
+        </h3>
+        {% for message in messages  %}
+                <script> alert('{{message}}')</script>
+        {% endfor %}
+
+          
+        {% for question in question_content %}
+            <div class="row">
+            <form action="{% url 'vote'%}" method="post">
+            {% csrf_token %}
+            <ul class="collection with-header">
+            <li class="collection-header"><h4>{{question.id}}. {{question.content}}</h4></li>
+            {% for choice in question.choice_set.all  %}
+            
+            <li class="collection-item">
+                <p>
+                    <label>
+                      <input name="choice" type="radio" value="{{choice.id}}"/>
+                      <span>{{choice.content}}</span>
+                    </label>
+                  </p>
+                
+            </li>
+            {% endfor %}
+            <li class="collection-item">
+                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                    <i class="material-icons right">send</i>
+                </button>         
+            </li>
+            </ul>
+                 
+            </form>
+            </div>
+        {% endfor %}        
+        
+    </div>
+
+    
+    
+</body>
+</html>
