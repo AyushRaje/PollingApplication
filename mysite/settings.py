@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-qb*o&4ukw26))rts5yhfw-bg5yv^2-t9-4@#huyz4mm0s!6j!y
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    'versel.app'
+    '.versel.app'
 ]
 
 
