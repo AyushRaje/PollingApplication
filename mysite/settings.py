@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-qb*o&4ukw26))rts5yhfw-bg5yv^2-t9-4@#huyz4mm0s!6j!y
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    '.versel.app'
+    '49.36.41.246'
 ]
 
 
@@ -128,6 +128,7 @@ STATIC_URL = '/static/'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'
+STATIC_ROOT=os.path.join(BASE_DIR,'staticfiles')
