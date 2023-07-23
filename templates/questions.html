@@ -30,6 +30,7 @@
     <nav>
         <div class="nav-wrapper" style="background:black;">
             <a href="#" class="brand-logo">Polling Application</a>
+            
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="{% url 'logout' %}">Logout</a></li>
                 <li><a href="{% url 'index' %}">Questions</a></li>
@@ -37,7 +38,14 @@
             </ul>
         </div>
     </nav>
+
+
     <div class="container">
+        <div class="row" style="margin-top: 20px;">
+            <div class="center-align">
+                <a href="{% url 'createsession' %}" class="waves-effect waves-light btn-large" style="background-color: red;">Create Your Session</a>
+            </div>
+        </div>
         <h3 class="center-align">
             Top Questions
         </h3>
@@ -51,7 +59,7 @@
             <form action="{% url 'vote'%}" method="post">
             {% csrf_token %}
             <ul class="collection with-header">
-            <li class="collection-header"><h4>{{question.id}}. {{question.content}}</h4></li>
+            <li class="collection-header"><h4> {{question.content}}</h4></li>
             {% for choice in question.choice_set.all  %}
             
             <li class="collection-item">

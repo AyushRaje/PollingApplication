@@ -11,6 +11,7 @@ from django.contrib.auth.models import User
 #         return self.username
 
 class Question(models.Model):
+    session_id=models.CharField(max_length=10,blank=False,null=True,default="ADMIN01")
     content=models.CharField(max_length=256)
     users_answered=models.ManyToManyField(User,blank=True)
     def __str__(self):
