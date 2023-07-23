@@ -1,17 +1,8 @@
-from django.shortcuts import render,redirect,get_object_or_404
+from django.shortcuts import render,redirect
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_protect
 from django.views.decorators.cache import cache_control
 from poller import models
-from poller import forms
-from django.contrib.auth import get_user
-from django.views.generic import (
-    ListView,
-    DetailView
-)
-from django.http import HttpResponseRedirect
 from django.urls import reverse
-from django.db.models import F
 from django.contrib import messages
 
 # Create your views here.
@@ -54,6 +45,7 @@ def results(request):
             "question_content":models.Question.objects.all
         }
         return render(request,'results.html',context)
+
 
 
 

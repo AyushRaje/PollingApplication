@@ -53,10 +53,13 @@
                             </div>
                             <div class="card-action">
                                 <button class="btn waves-effect waves-light"
-                                    type="submit" name="login">Login
+                                    type="submit" name="login" style="margin-right: 20px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Login
                                     <i class="material-icons right">send</i>
                                 </button>
+                                <a href="{% url 'signup' %}" class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>Signup</a>
+                           
                             </div>
+                           
                         </form>
                         {% if error %}
                             <div class="row" style="color: red;"> 
