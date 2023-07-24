@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 # Create your views here.
 
+@login_required(login_url='/login/')
 def CreateSession(request):
     sid='{}'.format(request.session.session_key[:6])
     questions=models.Question.objects.all()
@@ -27,6 +28,7 @@ def CreateSession(request):
 
     return render(request,'session.html',context)
 
+@login_required(login_url='/login/')
 def ShowQuestions(request):
     questions=models.Question.objects.all()
     if request.method=='POST':
@@ -38,7 +40,8 @@ def ShowQuestions(request):
     }    
     
     return render(request,'session_questions.html',context)
-    
+
+@login_required(login_url='/login/')   
 def Results(request):
     entered_id=request.session['id']
     questions=models.Question.objects.all()
@@ -48,6 +51,7 @@ def Results(request):
     }
     return render(request,'results.html',context)
 
+@login_required(login_url='/login/')
 def vote(request):
     has_answered=False
     try:   

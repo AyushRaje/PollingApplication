@@ -31,7 +31,7 @@
             <a href="#" class="brand-logo">Polling Application</a>
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="{% url 'logout' %}">Logout</a></li>
-                <li><a href="{% url 'createsession' %}">Questions</a></li>
+                <li><a href="{% url 'showquestions' %}">Questions</a></li>
                 <li><a href="{% url 'results' %}">Results</a></li>
             </ul>
         </div>
@@ -43,7 +43,7 @@
             Poll Results
         </h3>
     <ul class="collapsible">
-        {% for question in question_content  %}
+        {% for question in questions  %}
         {% if id == question.session_id %}
         <li>
           <div class="collapsible-header"> {{question.content}}</div>
