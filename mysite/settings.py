@@ -82,6 +82,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
+# Uncomment below before use
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',
@@ -89,6 +90,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 #     }
 # }
 
+# Comment/Delete the below Database dict before using
 DATABASES={
     'default':dj_database_url.parse(os.path.join('postgres://mydb_03ih_user:DKkCIrIWd7TqdMRthm1Uw636QJALl75P@dpg-citbqmdiuiedpv34n1ig-a.oregon-postgres.render.com/mydb_03ih'))
 }
