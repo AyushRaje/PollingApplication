@@ -62,14 +62,16 @@ def vote(request):
             if users.id==request.user.id:
                 has_answered=True
                 messages.warning(request,"Already answered")
-                break
-            if not has_answered:
-                selected_choice.vote+=1
-                selected_choice.save()
-                selected_ques.users_answered.add(request.user.id)
-                selected_ques.save()          
+                return redirect('showquestions')
+
+        if not has_answered:
+            selected_choice.vote+=1
+            selected_choice.save()
+            selected_ques.users_answered.add(request.user.id)
+            selected_ques.save()          
     except:
         messages.warning(request,"Please select an Option")
         return redirect('showquestions') 
-
+    
     return redirect('showquestions')
+    

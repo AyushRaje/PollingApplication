@@ -27,14 +27,30 @@
   });
     </script>
 <body style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems);
+  });
+
+  // Initialize collapsible (uncomment the lines below if you use the dropdown variation)
+  // var collapsibleElem = document.querySelector('.collapsible');
+  // var collapsibleInstance = M.Collapsible.init(collapsibleElem, options);
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+    </script>
     <nav>
         <div class="nav-wrapper" style="background:black;">
-            <a href="#" class="brand-logo">Polling Application</a>
+            <a href="#" class="brand-logo center">Polling App</a>
             
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="{% url 'logout' %}">Logout</a></li>
                 <li><a href="{% url 'admin:login' %}">Admin</a></li>
-                <li><a href="{% url 'index' %}">Create Session</a></li>
+                <!-- <li><a href="{% url 'index' %}">Create Session</a></li> -->
                 <!-- <li><a href="{% url 'results' %}">Results</a></li> -->
             </ul>
         </div>
@@ -42,14 +58,28 @@
 
 
     <div class="container">
-        {% if request.user.is_superuser %}
+        
         <div class="row" style="margin-top: 20px;">
-            <div class="center-align">
-                <a href="{% url 'createsession' %}" class="waves-effect waves-light btn-large" style="background-color: red;">Create Your Session</a>
+                <div>
+                <ul id="slide-out" class="sidenav">
+                    <li><p class="subheader center">Options</p></li>
+                    <li><div class="divider"></div></li>
+                    <li><a class="waves-effect" href="{% url 'logout' %}">Logout</a></li>
+                    <li><div class="divider"></div></li>
+                    <li><a class="waves-effect" href="{% url 'admin:login' %}">Admin</a></li>
+                    <li><div class="divider"></div></li>
+                    <li><a class="waves-effect" href="{% url 'createsession' %}">Create Session</a></li>
+                    <li><div class="divider"></div></li>
+                </ul>
+                <a href="#" data-target="slide-out" class="sidenav-trigger col l1 m1 s1"><i class="material-icons">menu</i>Options</a>
+                </div>
+                <div class="col offset-s2 offset-m3 offset-l4">
+                <a href="{% url 'createsession' %}" class="waves-effect waves-light btn-small center" style="background-color: red;">Create Your Session</a>
+                </div>
             </div>
         </div>
         
-        {% endif %}
+        
         
         <div class="row center-align" style="margin-top: 20px;">
             <h4> Enter Session Id : </h4>
@@ -74,7 +104,7 @@
             <li class="collection-header"><h4> {{question.content}}</h4></li>
             {% for choice in question.choice_set.all  %}
             
-            <li class="collection-item">
+            <li class="collection-item" style="font-weight: bold;">
                 <p>
                     <label>
                       <span>{{choice.content}}</span>

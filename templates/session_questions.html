@@ -16,12 +16,13 @@
 <body style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
     <nav>
         <div class="nav-wrapper" style="background:black;">
-            <a href="#" class="brand-logo">Polling Application</a>
+            <a href="#" class="brand-logo center">Polling App</a>
             
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="{% url 'logout' %}">Logout</a></li>
                 <li><a href="{% url 'admin:login' %}">Admin</a></li>
                 <li><a href="{% url 'results' %}">Results</a></li>
+                <li><a href="{% url 'index' %}">Create Session</a></li>
                 
             </ul>
         </div>
@@ -32,9 +33,40 @@
         alert("{{message}}");
       </script>
     {% endfor %}
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems);
+  });
+
+  // Initialize collapsible (uncomment the lines below if you use the dropdown variation)
+  // var collapsibleElem = document.querySelector('.collapsible');
+  // var collapsibleInstance = M.Collapsible.init(collapsibleElem, options);
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+    </script>
 
     <div class="container">
+        <div class="row">
+            <ul id="slide-out" class="sidenav">
+                <li><p class="subheader center">Options</p></li>
+                <li><div class="divider"></div></li>
+                <li><a class="waves-effect" href="{% url 'logout' %}">Logout</a></li>
+                <li><div class="divider"></div></li>
+                <li><a class="waves-effect" href="{% url 'admin:login' %}">Admin</a></li>
+                <li><div class="divider"></div></li>
+                <li><a class="waves-effect" href="{% url 'results' %}">Results</a></li>
+                <li><div class="divider"></div></li>
+                <li><a class="waves-effect" href="{% url 'index' %}">Create Session</a></li>
+                <li><div class="divider"></div></li>
+            </ul>
+            <a href="#" data-target="slide-out" class="sidenav-trigger col l1 m1 s1" style="margin-top: 20px;"><i class="material-icons">menu</i>Options</a>
+          
+        </div>
         {% for question in session_questions %}
             {% if entered_id == question.session_id %}
             <form action="{% url 'vote' %}" method="post">
