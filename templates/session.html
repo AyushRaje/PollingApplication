@@ -83,13 +83,13 @@ document.addEventListener('DOMContentLoaded', function() {
                 </button>
             </h5>
         </div>
-
+        <form name="createform" action="" method="post">
+            {% csrf_token %}
         <div class="row center-align">
             <a class="waves-effect waves-light btn modal-trigger center" href="#modal1"><i class="material-icons right">add</i>Add Question</a>
         </div>
         <div id="modal1" class="modal">
-            <form action="" method="post">
-                {% csrf_token %}
+            
             <div class="modal-content">
                     <h4 class="center-align" style="color:red;">Create Question</h4>
                         <br>
@@ -104,13 +104,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 
             </div>
             <div class="modal-footer">
-                <button class="btn waves-effect waves-light" type="submit" name="action">Add
+                <button class="btn waves-effect waves-light" type="button" value="Submit" onclick="submitForm()" >Add
                     <i class="material-icons right">send</i>
                 </button>
             </div>
-            </form>
-
         </div>
+        <script>
+            function submitForm() {
+                var frm = document.getElementsByName('createform')[0];
+                
+                frm.submit(); // Submit the form
+                frm.reset();
+                event.preventDefault()  
+            }
+        </script>
+        </form>
+        
         
           
         {% for ques in question %}
@@ -120,9 +129,9 @@ document.addEventListener('DOMContentLoaded', function() {
             <ul class="collection with-header">
                 <li class="collection-header"><h4>{{ques.content}} 
                     <a href="{% url 'delete' ques.id %}" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
-                    <a href="#modal2" class="waves-effect waves-light btn-floating btn-small modal-trigger center blue"><i class="material-icons">edit</i></a>
+                    <a href="#{{ques.id}}" class="waves-effect waves-light btn-floating btn-small modal-trigger center blue"><i class="material-icons">edit</i></a>
                 </h4>
-                <div id="modal2" class="modal">
+                <div id="{{ques.id}}" class="modal">
                     <form action="{% url 'edit' ques.id %}" method="post">
                         {% csrf_token %}
                     <div class="modal-content">

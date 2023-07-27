@@ -3,7 +3,18 @@ from poller import models
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.urls import reverse
 # Create your views here.
+
+def ShowCreatedQuestions(request):
+    sid='{}'.format(request.session.session_key[:6])
+    questions=models.Question.objects.all()
+    context={
+        'id':sid,
+        'question':questions,
+        'session_key':request.session.session_key
+    }
+    return render(request, 'session.html',context)
 
 @login_required(login_url='/login/')
 @cache_control(no_cache=True, must_revalidate=True, no_store=True)
@@ -26,10 +37,12 @@ def CreateSession(request):
                 new_choice=models.Choice.objects.create(question=new_question)
                 new_choice.content=request.POST[choice]
                 new_choice.save()
-
+        return redirect('showcreatedquestions')      
+        
     return render(request,'session.html',context)
 
 @login_required(login_url='/login/')
+@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def ShowQuestions(request):
     questions=models.Question.objects.all()
     if request.method=='POST':
@@ -87,4 +100,4 @@ def Edit(request,ques_id):
     CreateSession(request)
     question=models.Question.objects.filter(pk=ques_id)
     question.delete()
-    return redirect('createsession')
+    return redirect(reverse('createsession'))
