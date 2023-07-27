@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
             </div>
             <div class="modal-footer">
-                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+                <button class="btn waves-effect waves-light" type="submit" name="action">Add
                     <i class="material-icons right">send</i>
                 </button>
             </div>
@@ -118,7 +118,35 @@ document.addEventListener('DOMContentLoaded', function() {
           
         <div class="row">
             <ul class="collection with-header">
-                <li class="collection-header"><h4>{{ques.content}}</h4></li>
+                <li class="collection-header"><h4>{{ques.content}} 
+                    <a href="{% url 'delete' ques.id %}" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
+                    <a href="#modal2" class="waves-effect waves-light btn-floating btn-small modal-trigger center blue"><i class="material-icons">edit</i></a>
+                </h4>
+                <div id="modal2" class="modal">
+                    <form action="{% url 'edit' ques.id %}" method="post">
+                        {% csrf_token %}
+                    <div class="modal-content">
+                            <h4 class="center-align" style="color:red;">Edit Question</h4>
+                                <br>
+                                <h5> Question: </h5>
+                                <input type="text" name="entered_question" id="question" value="{{ques.content}}"> 
+                                {% for choice in ques.choice_set.all %}
+                                Choice {{forloop.counter}}:
+                                <input type="text" name="choice{{forloop.counter}}" id={{forloop.counter}} value="{{choice.content}}" >
+                                <br>  
+                                {% endfor %}
+                                
+                        
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn waves-effect waves-light" type="submit" name="action">Add
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                    </form>
+        
+                </div>
+                </li>
                 {% for choice in ques.choice_set.all %}
                 <li class="collection-item">{{choice.content}}</li>
                 {% endfor %}

@@ -30,7 +30,6 @@ def CreateSession(request):
     return render(request,'session.html',context)
 
 @login_required(login_url='/login/')
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def ShowQuestions(request):
     questions=models.Question.objects.all()
     if request.method=='POST':
@@ -78,4 +77,14 @@ def vote(request):
         return redirect('showquestions') 
     
     return redirect('showquestions')
-    
+
+def Delete(request,ques_id):
+    question=models.Question.objects.filter(pk=ques_id)
+    question.delete()
+    return redirect('createsession')    
+
+def Edit(request,ques_id):
+    CreateSession(request)
+    question=models.Question.objects.filter(pk=ques_id)
+    question.delete()
+    return redirect('createsession')
