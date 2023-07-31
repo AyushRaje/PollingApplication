@@ -75,7 +75,7 @@ def signup(request):
                     try:
                         new_user=User.objects.create_user(username=username,password=password)
                         new_user.save()
-                        messages.success(message="Signed in Successfully")
+                        messages.success(request,message="Signed in Successfully")
                         AddUserSession(request,new_user)
                         context['username_error']=False
                         context['pass_error']=False
