@@ -19,10 +19,10 @@
             <a href="#" class="brand-logo center">Polling App</a>
             
             <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="{% url 'index' %}">Home</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
                 <li><a href="{% url 'admin:login' %}">Admin</a></li>
                 <li><a href="{% url 'results' %}">Results</a></li>
-                <li><a href="{% url 'index' %}">Create Session</a></li>
                 
             </ul>
         </div>
@@ -55,13 +55,13 @@
             <ul id="slide-out" class="sidenav">
                 <li><p class="subheader center">Options</p></li>
                 <li><div class="divider"></div></li>
-                <li><a class="waves-effect" href="{% url 'logout' %}">Logout</a></li>
+                <li><a class="waves-effect" href="{% url 'index' %}">Home</a></li>
                 <li><div class="divider"></div></li>
                 <li><a class="waves-effect" href="{% url 'admin:login' %}">Admin</a></li>
                 <li><div class="divider"></div></li>
                 <li><a class="waves-effect" href="{% url 'results' %}">Results</a></li>
                 <li><div class="divider"></div></li>
-                <li><a class="waves-effect" href="{% url 'index' %}">Create Session</a></li>
+                <li><a class="waves-effect" href="{% url 'logout' %}">Logout</a></li>
                 <li><div class="divider"></div></li>
             </ul>
             <a href="#" data-target="slide-out" class="sidenav-trigger col l1 m1 s1" style="margin-top: 20px;"><i class="material-icons">menu</i>Options</a>
@@ -90,7 +90,8 @@
                                     <p>
                                         <label>
                                           <input name="choice" type="radio" value="{{choice.id}}" />
-                                          <span>{{choice.content}}</span>
+                                          <span>{{choice.content}} </span>
+                                          <span class="badge blue" >{{choice.vote}}</span>
                                         </label>
                                     </p>
                                 </li>

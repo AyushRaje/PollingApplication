@@ -25,9 +25,8 @@ def Log_in(request):
                 context={
                     "current_user":username
                 }
-                sid='{}'.format(request.session.session_key[:6])
-                add_session=session_models.SessionsCreated.objects.create(session_id=sid)
-                add_session.save()
+                
+                
                 return redirect('index')
             else:
                 messages.error(request,f'Invalid username or password')

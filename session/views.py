@@ -29,6 +29,14 @@ def CreateSession(request):
         'question':questions,
         'session_key':request.session.session_key
     }
+    session_added=False
+    for session in session_models.SessionsCreated.objects.all():
+        if session.session_id==sid:
+            session_added=True
+
+    if not session_added:
+        add_session=session_models.SessionsCreated.objects.create(session_id=sid)
+        add_session.save()        
     user_created_session=session_models.UserSession.objects.get(user=request.user)
     session_id_add=session_models.SessionsCreated.objects.get(session_id=sid)
     user_created_session.sessions_created.add(session_id_add)
@@ -41,10 +49,13 @@ def CreateSession(request):
         new_question.save()
         for i in range(1,5):
             choice="choice"+str(i)
-            if request.POST[choice]!='':
-                new_choice=models.Choice.objects.create(question=new_question)
-                new_choice.content=request.POST[choice]
-                new_choice.save()
+            try:
+                if request.POST[choice]!='':
+                    new_choice=models.Choice.objects.create(question=new_question)
+                    new_choice.content=request.POST[choice]
+                    new_choice.save()
+            except:
+                continue        
         return redirect('showcreatedquestions')      
         
     return render(request,'session.html',context)
