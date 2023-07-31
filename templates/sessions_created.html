@@ -1,0 +1,116 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+<!-- Compiled and minified JavaScript -->
+    <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    rel="stylesheet">
+
+    <title>Questions</title>
+</head>
+<body style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+    <nav>
+        <div class="nav-wrapper" style="background:black;">
+            <a href="#" class="brand-logo center">Polling App</a>
+            
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="{% url 'logout' %}">Logout</a></li>
+                <li><a href="{% url 'admin:login' %}">Admin</a></li>
+                <li><a href="{% url 'results' %}">Results</a></li>
+                <li><a href="{% url 'index' %}">Create Session</a></li>
+                
+            </ul>
+        </div>
+    </nav>
+
+    {% for message in messages %}
+      <script>
+        alert("{{message}}");
+      </script>
+    {% endfor %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+    var elems = document.querySelectorAll('.sidenav');
+    var instances = M.Sidenav.init(elems);
+  });
+
+  // Initialize collapsible (uncomment the lines below if you use the dropdown variation)
+  // var collapsibleElem = document.querySelector('.collapsible');
+  // var collapsibleInstance = M.Collapsible.init(collapsibleElem, options);
+
+  // Or with jQuery
+
+  $(document).ready(function(){
+    $('.sidenav').sidenav();
+  });
+    </script>
+
+    <div class="container">
+        <div class="row">
+            <ul id="slide-out" class="sidenav">
+                <li><p class="subheader center">Options</p></li>
+                <li><div class="divider"></div></li>
+                <li><a class="waves-effect" href="{% url 'logout' %}">Logout</a></li>
+                <li><div class="divider"></div></li>
+                <li><a class="waves-effect" href="{% url 'admin:login' %}">Admin</a></li>
+                <li><div class="divider"></div></li>
+                <li><a class="waves-effect" href="{% url 'results' %}">Results</a></li>
+                <li><div class="divider"></div></li>
+                <li><a class="waves-effect" href="{% url 'index' %}">Create Session</a></li>
+                <li><div class="divider"></div></li>
+            </ul>
+            <a href="#" data-target="slide-out" class="sidenav-trigger col l1 m1 s1" style="margin-top: 20px;"><i class="material-icons">menu</i>Options</a>
+          
+        </div>
+        <button id="mybtn" onclick="topFunction()" class="btn-floating btn-large" style="position: fixed; top: 90%; left:80%; color: red;">
+            <i class="material-icons">arrow_upward</i>
+            </button>
+        
+            <script>
+                // Get the button
+                let mybutton = document.getElementById("myBtn");
+                
+                // When the user scrolls down 20px from the top of the document, show the button
+                window.onscroll = function() {scrollFunction()};
+                
+                function scrollFunction() {
+                  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                    mybutton.style.display = "block";
+                  } else {
+                    mybutton.style.display = "none";
+                  }
+                }
+                
+                // When the user clicks on the button, scroll to the top of the document
+                function topFunction() {
+                  document.body.scrollTop = 0;
+                  document.documentElement.scrollTop = 0;
+                }
+                </script>
+
+                <h4 class="center">
+                    Your Sessions
+                </h4>
+                <div class="row">
+                    <ul class="collection" style="color: green;">
+                        {% for sessions in sessions_created  %}
+                        <li class="collection-item">
+                        <h5>
+                            {{forloop.counter}}-{{sessions}}
+                            <a href="{% url 'deletesession' sessions %}" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
+                            <a href="{% url 'editsession' sessions %}" class="waves-effect waves-light btn-floating btn-small modal-trigger center blue"><i class="material-icons">edit</i></a>
+                        </h5>
+                        </li>
+                          
+                        {% endfor %}
+                        
+                      </ul>
+
+                </div>
+        </div>   
+    </body>
+    </html>

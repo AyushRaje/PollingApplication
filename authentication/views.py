@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.contrib.auth import login,logout,authenticate
 from django.contrib.auth.models import User
 from django.db.utils import IntegrityError 
+from session import models as session_models
 
 def Log_in(request):
     if request.method=='GET':
@@ -24,6 +25,9 @@ def Log_in(request):
                 context={
                     "current_user":username
                 }
+                sid='{}'.format(request.session.session_key[:6])
+                add_session=session_models.SessionsCreated.objects.create(session_id=sid)
+                add_session.save()
                 return redirect('index')
             else:
                 messages.error(request,f'Invalid username or password')
@@ -71,6 +75,8 @@ def signup(request):
                     try:
                         new_user=User.objects.create_user(username=username,password=password)
                         new_user.save()
+                        messages.success(message="Signed in Successfully")
+                        AddUserSession(request,new_user)
                         context['username_error']=False
                         context['pass_error']=False
                     except IntegrityError as err:
@@ -81,7 +87,9 @@ def signup(request):
                     
     return render(request,'signup.html',context)
     
-
+def AddUserSession(request,user):
+    addsession=session_models.UserSession.objects.create(user=user)
+    addsession.save()
 
 
 

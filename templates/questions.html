@@ -71,28 +71,50 @@ document.addEventListener('DOMContentLoaded', function() {
                     <li><a class="waves-effect" href="{% url 'createsession' %}">Create Session</a></li>
                     <li><div class="divider"></div></li>
                 </ul>
-                <a href="#" data-target="slide-out" class="sidenav-trigger col l1 m1 s1"><i class="material-icons">menu</i>Options</a>
+                <div class="row">
+                  <a href="#" data-target="slide-out" class="sidenav-trigger left col l1 s1 m1"><i class="material-icons">menu</i>Options</a>
+
                 </div>
-                <div class="col offset-s2 offset-m3 offset-l4">
-                <a href="{% url 'createsession' %}" class="waves-effect waves-light btn-small center" style="background-color: red;">Create Your Session</a>
                 </div>
+                  <div class="row">
+                    <div class="center">
+                    <a href="{% url 'createsession' %}" class="waves-effect waves-light btn-large center" style="background-color: red;">Create Session</a>
+                    </div>
+                  </div>
+                  <hr style="width: 100%; border-width: 3px;">
+                  <div class="row">
+                    <div class="center">
+                    <a href="{% url 'sessionscreated' %}" class="waves-effect waves-light btn-large center" style="background-color: blue;"> Edit Your Session</a>
+                    </div>
+                    {% if messages %}
+                      {% for message in messages %}
+                          <script>
+                            alert("{{message}}")
+                          </script>
+                      {% endfor %}
+                      
+                    {% endif %}
+                  </div>
+                  <hr style="width: 100%; border-width: 3px;">
             </div>
         </div>
         
         
         
         <div class="row center-align" style="margin-top: 20px;">
-            <h4> Enter Session Id : </h4>
+            <h4> Session ID : </h4>
             <form action="{% url 'showquestions' %}" method="post">
                 {% csrf_token %}
-                <input type="text" name="session_id" id="session_id">
-                <button class="btn waves-effect waves-light" type="submit" name="action"
+                <div class="row input-field">
+                  <input type="text" name="session_id" id="session_id" class="col l6 offset-l3 center-align" placeholder="Enter Session ID">
+                </div>
+                <button class="btn-large waves-effect waves-light green btn-floating" type="submit" name="action"
                 style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
                 Join
-                <i class="material-icons right">send</i>
+                <i class="material-icons right">chevron_right</i>
                 </button>
             </form>
-            
+            <hr style="width: 100%; border-width: 3px; margin-top: 20px;">  
         </div>
         <h3 class="center-align">
             Top Questions

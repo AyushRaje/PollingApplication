@@ -1,10 +1,13 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from poller import models
 from django.views.decorators.cache import cache_control
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.urls import reverse
+from session import models as session_models
+from django.core.exceptions import ObjectDoesNotExist
 # Create your views here.
+
 
 def ShowCreatedQuestions(request):
     sid='{}'.format(request.session.session_key[:6])
@@ -26,6 +29,11 @@ def CreateSession(request):
         'question':questions,
         'session_key':request.session.session_key
     }
+    user_created_session=session_models.UserSession.objects.get(user=request.user)
+    session_id_add=session_models.SessionsCreated.objects.get(session_id=sid)
+    user_created_session.sessions_created.add(session_id_add)
+    user_created_session.save()
+
     if request.method=='POST':
         new_question=models.Question.objects.create()
         new_question.session_id=sid
@@ -101,3 +109,76 @@ def Edit(request,ques_id):
     question=models.Question.objects.filter(pk=ques_id)
     question.delete()
     return redirect(reverse('createsession'))
+
+def ShowCreatedSessions(request):
+    try:
+        session_user=session_models.UserSession.objects.get(user_id=request.user.id)
+        sessions_created=session_user.sessions_created.all()
+        context={
+            "sessions_created":sessions_created
+        }
+
+        return render(request, 'sessions_created.html',context)
+    except ObjectDoesNotExist:
+        messages.error(request,"No Existing Sessions Present")
+        return redirect('index')
+    
+@login_required(login_url='login/')
+def DeleteSession(request,sessions):
+    session_to_delete=session_models.SessionsCreated.objects.get(session_id=sessions)
+    session_to_delete.delete()
+    for questions in models.Question.objects.all():
+        if questions.session_id==sessions:
+            questions.delete()
+    return redirect('sessionscreated')
+
+def EditSession(request,sessions):
+    sid=sessions
+    request.session['sid']=sid
+    questions=models.Question.objects.all()
+    context={
+        'id':sid,
+        'question':questions,
+        'session_key':sessions
+    }
+    if request.method=='POST':
+        new_question=models.Question.objects.create()
+        new_question.session_id=sid
+        new_question.content=request.POST['entered_question']
+        new_question.save()
+        for i in range(1,5):
+            choice="choice"+str(i)
+            try:
+                if request.POST[choice]!="":
+                    new_choice=models.Choice.objects.create(question=new_question)
+                    new_choice.content=request.POST[choice]
+                    new_choice.save()
+            except:
+                continue        
+        return redirect('showeditedquestions')   
+        
+    return render(request,'edit_session.html',context)
+
+def DeleteEditSession(request,ques_id):
+    sid=request.session.get('sid')
+    question=models.Question.objects.filter(pk=ques_id)
+    question.delete()
+    return redirect(reverse('editsession',kwargs={"sessions":sid}))
+
+def EditEditSession(request,ques_id):
+    sid=request.session.get('sid')
+    EditSession(request,sid)
+    question=models.Question.objects.filter(pk=ques_id)
+    question.delete()
+    return redirect(reverse('editsession',kwargs={"sessions":sid}))
+
+def ShowEditedQuestions(request):
+    sid=request.session.get('sid')
+    print(sid)
+    questions=models.Question.objects.all()
+    context={
+        'id':sid,
+        'question':questions,
+        'session_key':request.session.session_key
+    }
+    return render(request, 'edit_session.html',context)
