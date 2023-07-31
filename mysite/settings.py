@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 
 # Comment/Delete the below Database dict before using
 DATABASES={
-    'default':dj_database_url.parse(os.path.join('postgres://pollingdb_user:pAsh464ndm2B3V8hZnhDlcJ919bn4NGC@dpg-cj3nv5h8g3n1jkit1du0-a/pollingdb'))
+    'default':dj_database_url.parse(os.path.join('postgres://pollingdb_user:pAsh464ndm2B3V8hZnhDlcJ919bn4NGC@dpg-cj3nv5h8g3n1jkit1du0-a.singapore-postgres.render.com/pollingdb'))
 }
 
 
