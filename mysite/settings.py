@@ -83,17 +83,17 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 # Uncomment below before use
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Comment/Delete the below Database dict before using
-# DATABASES={
-#     'default':dj_database_url.parse(os.path.join('postgres://pollingdb_user:pAsh464ndm2B3V8hZnhDlcJ919bn4NGC@dpg-cj3nv5h8g3n1jkit1du0-a.singapore-postgres.render.com/pollingdb'))
-# }
+DATABASES={
+    'default':dj_database_url.parse(os.path.join('postgresql://postgres:hA4uzZDV8noSw9wjVrHA@containers-us-west-157.railway.app:7864/railway'))
+}
 
 
 # Password validation
