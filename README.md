@@ -27,3 +27,5 @@
 # Features to come (V2.0):
 <br> 1.Accessing old sessions and edit from where you left.
 <br> 2.Dynamically see the poll results 
+
+# UPDATE!- Version 2.0 Deployed
