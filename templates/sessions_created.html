@@ -18,10 +18,11 @@
             <a href="#" class="brand-logo center">Polling App</a>
             
             <ul id="nav-mobile" class="right hide-on-med-and-down">
+                <li><a href="{% url 'index' %}">Home</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
                 <li><a href="{% url 'admin:login' %}">Admin</a></li>
                 <li><a href="{% url 'results' %}">Results</a></li>
-                <li><a href="{% url 'index' %}">Create Session</a></li>
+                
                 
             </ul>
         </div>
@@ -54,13 +55,13 @@
             <ul id="slide-out" class="sidenav">
                 <li><p class="subheader center">Options</p></li>
                 <li><div class="divider"></div></li>
-                <li><a class="waves-effect" href="{% url 'logout' %}">Logout</a></li>
+                <li><a class="waves-effect" href="{% url 'index' %}">Create Session</a></li>
                 <li><div class="divider"></div></li>
                 <li><a class="waves-effect" href="{% url 'admin:login' %}">Admin</a></li>
                 <li><div class="divider"></div></li>
                 <li><a class="waves-effect" href="{% url 'results' %}">Results</a></li>
                 <li><div class="divider"></div></li>
-                <li><a class="waves-effect" href="{% url 'index' %}">Create Session</a></li>
+                <li><a class="waves-effect" href="{% url 'logout' %}">Logout</a></li>
                 <li><div class="divider"></div></li>
             </ul>
             <a href="#" data-target="slide-out" class="sidenav-trigger col l1 m1 s1" style="margin-top: 20px;"><i class="material-icons">menu</i>Options</a>
@@ -100,7 +101,7 @@
                         {% for sessions in sessions_created  %}
                         <li class="collection-item">
                         <h5>
-                            {{forloop.counter}}-{{sessions}}
+                            {{forloop.counter}} : {{sessions}}
                             <a href="{% url 'deletesession' sessions %}" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
                             <a href="{% url 'editsession' sessions %}" class="waves-effect waves-light btn-floating btn-small modal-trigger center blue"><i class="material-icons">edit</i></a>
                         </h5>

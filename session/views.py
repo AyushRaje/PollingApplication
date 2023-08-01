@@ -70,8 +70,17 @@ def ShowQuestions(request):
     context={
             'session_questions':questions,
             'entered_id':request.session['id']
-    }    
-    
+    }
+    session_valid=False
+    all_sessions=session_models.SessionsCreated.objects.all()
+    for ids in all_sessions:
+        if ids.session_id==entered_id:
+            session_valid=True
+            break   
+    if not session_valid:
+        messages.info(request,"Please Enter a Valid Session ID")
+        return redirect('index')
+
     return render(request,'session_questions.html',context)
 
 @login_required(login_url='/login/')   

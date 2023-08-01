@@ -78,12 +78,16 @@ def signup(request):
                         AddUserSession(request,new_user)
                         context['username_error']=False
                         context['pass_error']=False
-                    except IntegrityError as err:
+                    except:
                         context['username_error']=True
                         return render(request,'signup.html',context)  
                     
                     return redirect('login')   
-                    
+        else:
+            messages.error(request,"Please Enter Valid/Strong Password")
+            return redirect('signup')
+
+
     return render(request,'signup.html',context)
     
 def AddUserSession(request,user):
