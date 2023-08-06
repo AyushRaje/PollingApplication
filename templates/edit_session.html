@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 
                 frm.submit(); // Submit the form
                 frm.reset();
-                event.preventDefault()  
+                event.preventDefault();
             }
         </script>
         </form>
@@ -159,7 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                 <input type="text" name="choice{{forloop.counter}}" id={{forloop.counter}} value="{{choice.content}}" >
                               
                                 {% endfor %}
-                                <button class="btn waves-effect waves-light center" style="margin-left: 45%; border-radius: 20px;" type="button" value="Submit" onclick="submitForm()">Save
+                                <button class="btn waves-effect waves-light center" style="margin-left: 45%; border-radius: 20px;" type="submit" name="action" >Save
                                     <i class="material-icons right">check</i>
                                 </button>
                         

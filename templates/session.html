@@ -84,27 +84,20 @@
                 <a href="#" data-target="slide-out" class="sidenav-trigger col l1 m1 s1" style="margin-top: 20px;"><i
                         class="material-icons">menu</i>Options</a>
             </div>
-            
+            <script>
+                function copy(){
+                    let text="{{id}}";
+                    M.toast({html:'Copied Text : {{id}}',classes:'rounded , green'})
+                }
+            </script>
 
 
             <h5 class="col offset-l4 offset-s1" style="color: red;">Session ID: {{id}}
-                <button class="waves-effect waves-light btn-floating" onclick="Copy()">
+                <button class="waves-effect waves-light btn-floating" onclick="copy()">
                     <i class="material-icons">content_copy</i>
                 </button>
 
-                <script>
-                    function Copy(){
-                    var copyText = document.getElementById("myInput");
-    
-    
-                    copyText.select();
-                    copyText.setSelectionRange(0, 99999); // For mobile devices
-    
-     
-                    navigator.clipboard.writeText(copyText.value);
-                    M.toast({html: copyText.value, classes: 'rounded green'});
-                    }
-                </script>
+                
 
             </h5>
         </div>
@@ -130,9 +123,9 @@
                 <a class="waves-effect waves-light btn modal-trigger center" style="border-radius: 20px;" href="#modal1"><i
                         class="material-icons right">add</i>Add Question</a>
             </div>
-            <div id="modal1" class="modal" style=" background: rgba(202, 196, 196, 0.7); color: black; border-radius: 40px;">
+            <div id="modal1" class="modal" style="background: rgba(202, 196, 196, 0.7); color: black; border-radius: 40px;">
 
-                <div class="modal-content">
+                <div class="modal-content" style="background: rgba(202, 196, 196, 0.7); color: black;">
                     <h4 class="center-align" style="color:red;">Create Question</h4>
                     <h6> Question: </h6>
                     <input type="text" name="entered_question" id="question" placeholder="Enter The Question">
@@ -140,13 +133,10 @@
                     Choice {{i}}:
                     <input type="text" name="choice{{i}}" id={{i}} placeholder="Enter Choice">
                     {% endfor %}
-                    
                     <button class="btn waves-effect waves-light center" style="margin-left: 45%; border-radius: 20px;" type="button" value="Submit" onclick="submitForm()">Add
                         <i class="material-icons right">check</i>
                     </button>
-
                 </div>
-                
             </div>
             <script>
                 function submitForm() {
@@ -154,7 +144,7 @@
 
                     frm.submit(); // Submit the form
                     frm.reset();
-                    event.preventDefault();
+                    event.preventDefault()
                 }
             </script>
         </form>
@@ -175,10 +165,10 @@
                             class="waves-effect waves-light btn-floating btn-small modal-trigger center blue"><i
                                 class="material-icons">edit</i></a>
                     </h4>
-                    <div id="{{ques.id}}" class="modal">
+                    <div id="{{ques.id}}" class="modal" style="background: rgba(202, 196, 196, 0.7); border-radius: 30px;">
                         <form action="{% url 'edit' ques.id %}" method="post">
                             {% csrf_token %}
-                            <div class="modal-content">
+                            <div class="modal-content" style="background: rgba(202, 196, 196, 0.7); color: black;">
                                 <h4 class="center-align" style="color:red;">Edit Question</h4>
                                 <br>
                                 <h5> Question: </h5>
@@ -189,7 +179,7 @@
                                     value="{{choice.content}}">
                                 
                                 {% endfor %}
-                                <button class="btn waves-effect waves-light center" style="margin-left: 45%; border-radius: 20px;" type="button" value="Submit" onclick="submitForm()">Save
+                                <button class="btn waves-effect waves-light center" style="margin-left: 45%; border-radius: 20px;" type="submit" name="action">Save
                                     <i class="material-icons right">check</i>
                                 </button>
             
