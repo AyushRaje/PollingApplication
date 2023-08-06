@@ -25,7 +25,26 @@
     $('.collapsible').collapsible();
   });
 </script>
+<style>
+    
+    body{
+        height: 10000px;
+        max-height: 100%;
+        width: 100%;
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        background-image: url("https://cdn.pixabay.com/photo/2017/07/10/23/43/question-mark-2492009_1280.jpg");
+        background-repeat: repeat-y; 
+        background-size: cover;
+        position: absolute;
+        overflow-y: scroll;
+        
+    }
+</style>
 <body style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+    <script>
+      M.toast({html: 'Click the Questions to see Results', classes: 'rounded'});
+    </script>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var elems = document.querySelectorAll('.sidenav');
@@ -68,21 +87,21 @@
                 <li><div class="divider"></div></li>
             </ul>
             <a href="#" data-target="slide-out" class="sidenav-trigger col l1 m1 s1" style="margin-top: 20px;"><i class="material-icons">menu</i>Options</a>
-            <h4 class="col offset-l4 offset-s2">
+            <h4 class="col offset-l4 offset-s2" style="color: white;">
                 Poll Results
             </h4>
         </div>
         
-    <ul class="collapsible">
+    <ul class="collapsible" style="border-radius: 30px; background: rgba(202, 196, 196, 0.6);">
         {% for question in questions  %}
         {% if id == question.session_id %}
         <li>
-          <div class="collapsible-header"> {{question.content}}</div>
-          <div class="collapsible-body">
+          <div class="collapsible-header" style="border-radius: 30px; background: rgba(202, 196, 196, 0.6);"><h6>Question : {{question.content}}</h6></div>
+          <div class="collapsible-body" style="border-radius: 30px; color: black;">
             {% for choice in question.choice_set.all  %}
-            <div class="row">
-                <span>{{choice.content}}<span class="badge blue">{{choice.vote}}</span></span> 
-                
+            <div class="row" style="border-radius: 30px;">
+                <span>{{choice.content}}<span class="badge blue" style="color: black;">{{choice.vote}}</span></span> 
+                <hr color="black">
             </div>
             
             {% endfor %}
@@ -95,7 +114,7 @@
     </ul>
     </div> 
     
-    <button id="mybtn" onclick="topFunction()" class="btn-floating btn-large" style="position: fixed; top: 90%; left:80%; color: red;">
+    <button id="mybtn" onclick="topFunction()" class="btn-floating btn-large" style="position: fixed; top: 90%; left:90%; color: red;">
         <i class="material-icons">arrow_upward</i>
         </button>
     

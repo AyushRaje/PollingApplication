@@ -34,6 +34,22 @@ document.addEventListener('DOMContentLoaded', function() {
   });
     
 </script>
+<style>
+    body{
+        height: 10000px;
+        max-height: 100%;
+        width: 100%;
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        background-image: url("https://cdn.pixabay.com/photo/2017/07/10/23/43/question-mark-2492009_1280.jpg");
+        background-repeat: repeat-y; 
+        background-size: cover;
+        position: absolute;
+        overflow-y: scroll;
+        
+    }
+  </style>
+
 <body style="background-color: #e0e0e0; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
     <nav>
         <div class="nav-wrapper" style="background:black;">
@@ -78,7 +94,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </ul>
                 <a href="#" data-target="slide-out" class="sidenav-trigger col l1 m1 s1" style="margin-top: 20px;"><i class="material-icons">menu</i>Options</a>
                 </div>
-            <h5 class="col offset-l4 offset-s1" style="color: red;">Session Id: {{id}} 
+            <h5 class="col offset-l4 offset-s1" style="color: red;">Session ID: {{id}} 
                 <button class="waves-effect waves-light btn-floating" onclick="Copy()">
                     <i class="material-icons">content_copy</i>
                 </button>
@@ -87,28 +103,26 @@ document.addEventListener('DOMContentLoaded', function() {
         <form name="createform" action="{% url 'editsession' id %}" method="post">
             {% csrf_token %}
         <div class="row center-align">
-            <a class="waves-effect waves-light btn modal-trigger center" href="#modal1"><i class="material-icons right">add</i>Add Question</a>
+            <a class="waves-effect waves-light btn modal-trigger center" style="border-radius: 20px;" href="#modal1"><i class="material-icons right">add</i>Add Question</a>
         </div>
-        <div id="modal1" class="modal">
+        <div id="modal1" class="modal" style="background: rgba(202, 196, 196, 0.7); border-radius: 30px; color: black;">
             
-            <div class="modal-content">
+            <div class="modal-content" style="background: rgba(202, 196, 196, 0.7);">
                     <h4 class="center-align" style="color:red;">Create Question</h4>
-                        <br>
-                        <h5> Question: </h5>
+        
+                        <h6> Question: </h6>
                         <input type="text" name="entered_question" id="question" placeholder="Enter The Question"> 
                         {% for i in '1234' %}
                         Choice {{i}}:
                         <input type="text" name="choice{{i}}" id={{i}} placeholder="Enter Choice" >
-                        <br>  
+                        
                         {% endfor %}
                         
-                
+                        <button class="btn waves-effect waves-light center" style="margin-left: 45%; border-radius: 20px;" type="button" value="Submit" onclick="submitForm()">Add
+                            <i class="material-icons right">check</i>
+                        </button>
             </div>
-            <div class="modal-footer">
-                <button class="btn waves-effect waves-light" type="button" value="Submit" onclick="submitForm()" >Add
-                    <i class="material-icons right">send</i>
-                </button>
-            </div>
+            
         </div>
         <script>
             function submitForm() {
@@ -127,38 +141,36 @@ document.addEventListener('DOMContentLoaded', function() {
         {% if id == ques.session_id %}
           
         <div class="row">
-            <ul class="collection with-header">
-                <li class="collection-header"><h4>{{ques.content}} 
+            <ul class="collection with-header" style="background: rgba(202, 196, 196, 0.6); border-radius: 30px; color: black;">
+                <li class="collection-header" style="background: rgba(202, 196, 196, 0.6);"><h4>Question : {{ques.content}} 
                     <a href="{% url 'deleteeditsession' ques.id %}" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>
                     <a href="#{{ques.id}}" class="waves-effect waves-light btn-floating btn-small modal-trigger center blue"><i class="material-icons">edit</i></a>
                 </h4>
-                <div id="{{ques.id}}" class="modal">
+                <div id="{{ques.id}}" class="modal" style="background: rgba(202, 196, 196, 0.6); border-radius: 30px; color: black;">
                     <form action="{% url 'editeditsession' ques.id %}" method="post">
                         {% csrf_token %}
-                    <div class="modal-content">
+                    <div class="modal-content" style="background: rgba(202, 196, 196, 0.7); color: black;">
                             <h4 class="center-align" style="color:red;">Edit Question</h4>
-                                <br>
-                                <h5> Question: </h5>
+                            
+                                <h6> Question: </h6>
                                 <input type="text" name="entered_question" id="question" value="{{ques.content}}"> 
                                 {% for choice in ques.choice_set.all %}
                                 Choice {{forloop.counter}}:
                                 <input type="text" name="choice{{forloop.counter}}" id={{forloop.counter}} value="{{choice.content}}" >
-                                <br>  
+                              
                                 {% endfor %}
-                                
+                                <button class="btn waves-effect waves-light center" style="margin-left: 45%; border-radius: 20px;" type="button" value="Submit" onclick="submitForm()">Save
+                                    <i class="material-icons right">check</i>
+                                </button>
                         
                     </div>
-                    <div class="modal-footer">
-                        <button class="btn waves-effect waves-light" type="submit" name="action">Add
-                            <i class="material-icons right">send</i>
-                        </button>
-                    </div>
+                    
                     </form>
         
                 </div>
                 </li>
                 {% for choice in ques.choice_set.all %}
-                <li class="collection-item">{{choice.content}}</li>
+                <li class="collection-item" style="background: rgba(202, 196, 196, 0.6); color: black;">{{choice.content}}</li>
                 {% endfor %}
                 
             </ul>  
@@ -168,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         
     </div>
-    <button id="mybtn" onclick="topFunction()" class="btn-floating btn-large" style="position: fixed; top: 90%; left:80%; color: red;">
+    <button id="mybtn" onclick="topFunction()" class="btn-floating btn-large" style="position: fixed; top: 90%; left:90%; color: red;">
         <i class="material-icons">arrow_upward</i>
         </button>
     

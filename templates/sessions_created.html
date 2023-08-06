@@ -12,6 +12,22 @@
 
     <title>Questions</title>
 </head>
+
+<style>
+  body{
+        height: 10000px;
+        max-height: 100%;
+        width: 100%;
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        background-image: url("https://cdn.pixabay.com/photo/2017/07/10/23/43/question-mark-2492009_1280.jpg");
+        background-repeat: repeat-y; 
+        background-size: cover;
+        position: absolute;
+        overflow-y: scroll;
+        
+    }
+</style>
 <body style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
     <nav>
         <div class="nav-wrapper" style="background:black;">
@@ -21,18 +37,22 @@
                 <li><a href="{% url 'index' %}">Home</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
                 <li><a href="{% url 'admin:login' %}">Admin</a></li>
-                <li><a href="{% url 'results' %}">Results</a></li>
+                <!-- <li><a href="{% url 'results' %}">Results</a></li> -->
                 
                 
             </ul>
         </div>
     </nav>
 
-    {% for message in messages %}
-      <script>
-        alert("{{message}}");
-      </script>
-    {% endfor %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}"{% endif %}> <script>
+            M.toast({html: '{{message}}', classes: 'rounded red'});
+        </script></li>
+        {% endfor %}
+    </ul>
+    {% endif %} 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
     var elems = document.querySelectorAll('.sidenav');
@@ -55,19 +75,19 @@
             <ul id="slide-out" class="sidenav">
                 <li><p class="subheader center">Options</p></li>
                 <li><div class="divider"></div></li>
-                <li><a class="waves-effect" href="{% url 'index' %}">Create Session</a></li>
+                <li><a class="waves-effect" href="{% url 'index' %}">Home</a></li>
                 <li><div class="divider"></div></li>
                 <li><a class="waves-effect" href="{% url 'admin:login' %}">Admin</a></li>
                 <li><div class="divider"></div></li>
-                <li><a class="waves-effect" href="{% url 'results' %}">Results</a></li>
-                <li><div class="divider"></div></li>
+                <!-- <li><a class="waves-effect" href="{% url 'results' %}">Results</a></li>
+                <li><div class="divider"></div></li> -->
                 <li><a class="waves-effect" href="{% url 'logout' %}">Logout</a></li>
                 <li><div class="divider"></div></li>
             </ul>
             <a href="#" data-target="slide-out" class="sidenav-trigger col l1 m1 s1" style="margin-top: 20px;"><i class="material-icons">menu</i>Options</a>
           
         </div>
-        <button id="mybtn" onclick="topFunction()" class="btn-floating btn-large" style="position: fixed; top: 90%; left:80%; color: red;">
+        <button id="mybtn" onclick="topFunction()" class="btn-floating btn-large" style="position: fixed; top: 90%; left:90%; color: red;">
             <i class="material-icons">arrow_upward</i>
             </button>
         
@@ -93,13 +113,13 @@
                 }
                 </script>
 
-                <h4 class="center">
+                <h4 class="center" style="color: white;">
                     Your Sessions
                 </h4>
                 <div class="row">
-                    <ul class="collection" style="color: green;">
+                    <ul class="collection" style="color: green; background: rgba(202, 196, 196, 0.6); border-radius: 30px;">
                         {% for sessions in sessions_created  %}
-                        <li class="collection-item">
+                        <li class="collection-item" style="background: rgba(202, 196, 196, 0.6);">
                         <h5>
                             {{forloop.counter}} : {{sessions}}
                             <a href="{% url 'deletesession' sessions %}" class="btn-floating btn-small waves-effect waves-light red"><i class="material-icons">delete</i></a>

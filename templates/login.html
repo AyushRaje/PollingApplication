@@ -30,8 +30,20 @@
   });
       
     </script>
+    <style>
+         body{
+            background-image: url("https://cdn.pixabay.com/photo/2017/07/10/23/43/question-mark-2492009_1280.jpg");
+            background-repeat: repeat-y;
+            background-size: cover;
+            height: 100%;
+            width: 100%;
+            position: fixed;
+        }
+    </style>
 
-    <body style="background-color: #e0e0e0; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+    <body style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
+        
+        
         <header>
             <nav>
                 <div class="nav-wrapper" style="background:black;">
@@ -48,18 +60,17 @@
             </nav>
             
         </header>
-
-    
+        
 
         <div class="container">
             
-            <h3 class="center-align">
+            <h3 class="center-align" style="color: white;">
                 Login
             </h3>
             
             <div class="row">
                 <div class="col s12 m8 l6 offset-l3 offset-m2 center-align">
-                    <div class="card blue-grey darken-3 z-depth-5">
+                    <div class="card darken-1 z-depth-5" style="border-radius:40px; background: rgba(0,0,0,0.5);">
                         <div class="card-content white-text">
                             <div class="row">
                                 <ul id="slide-out" class="sidenav">
@@ -73,9 +84,9 @@
                                 <a href="#" data-target="slide-out" class="sidenav-trigger col l2 m2 s2"><i class="material-icons">menu</i>Options</a>
                             </div>
                             <span class="card-title">
-                                <img class="responsive-img circle" width="100px"
-                                    ,height="100px"
-                                    src="https://e7.pngegg.com/pngimages/549/560/png-clipart-computer-icons-login-scalable-graphics-email-accountability-blue-logo-thumbnail.png">
+                                <img class="responsive-img circle" width="130px"
+                                    ,height="200px"
+                                    src="https://cdn.dribbble.com/users/8619169/screenshots/16514320/media/0dc828901898c59928c3d69718791941.gif">
                             </span>
                             
                             <form action="" method="post">
@@ -91,12 +102,12 @@
                                 {{form.password}}
 
                             </div>
-                            <div class="card-action">
+                            <div class="card-action" style="border-radius: 40px; background: rgba(0,0,0,0.5);">
                                 <button class="btn waves-effect waves-light"
-                                    type="submit" name="login" style="margin-right: 20px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Login
+                                    type="submit" name="login" style="border-radius: 20px; margin-right: 20px; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">Login
                                     <i class="material-icons right">send</i>
                                 </button>
-                                <a href="{% url 'signup' %}" class="waves-effect waves-light btn"><i class="material-icons left">cloud</i>Signup</a>
+                                <a href="{% url 'signup' %}" class="waves-effect waves-light btn" style="border-radius: 20px;"><i class="material-icons left">cloud</i>Signup</a>
                            
                             </div>
                            
@@ -110,15 +121,15 @@
                     </div>
                 </div>
             </div>
-        <div class="row">
             {% if messages %}
-                {% for message in messages  %}
-                    <script>
-                        alert('{{message}}')
-                    </script>
+            <ul class="messages">
+                {% for message in messages %}
+                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}> <script>
+                    M.toast({html: '{{message}}', classes: 'rounded red'});
+                </script></li>
                 {% endfor %}
-            {% endif %}
-        </div>   
+            </ul>
+            {% endif %} 
             
         </div>
     </body>

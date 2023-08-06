@@ -1,138 +1,174 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-<!-- Compiled and minified JavaScript -->
-    <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <title>Questions</title>
 </head>
+<style>
+    body{
+        height: 10000px;
+        max-height: 100%;
+        width: 100%;
+        -webkit-backdrop-filter: blur(20px);
+        backdrop-filter: blur(20px);
+        background-image: url("https://cdn.pixabay.com/photo/2017/07/10/23/43/question-mark-2492009_1280.jpg");
+        background-repeat: repeat-y; 
+        background-size: cover;
+        position: absolute;
+        overflow-y: scroll;
+        
+    }
+  </style>
+
 <body style="font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;">
     <nav>
         <div class="nav-wrapper" style="background:black;">
             <a href="#" class="brand-logo center">Polling App</a>
-            
+
             <ul id="nav-mobile" class="right hide-on-med-and-down">
                 <li><a href="{% url 'index' %}">Home</a></li>
                 <li><a href="{% url 'logout' %}">Logout</a></li>
                 <li><a href="{% url 'admin:login' %}">Admin</a></li>
                 <li><a href="{% url 'results' %}">Results</a></li>
-                
+
             </ul>
         </div>
     </nav>
 
-    {% for message in messages %}
-      <script>
-        alert("{{message}}");
-      </script>
-    {% endfor %}
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>
+            <script>
+                M.toast({ html: '{{message}}', classes: 'rounded red' });
+            </script>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-    var elems = document.querySelectorAll('.sidenav');
-    var instances = M.Sidenav.init(elems);
-  });
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('.sidenav');
+            var instances = M.Sidenav.init(elems);
+        });
 
-  // Initialize collapsible (uncomment the lines below if you use the dropdown variation)
-  // var collapsibleElem = document.querySelector('.collapsible');
-  // var collapsibleInstance = M.Collapsible.init(collapsibleElem, options);
+        // Initialize collapsible (uncomment the lines below if you use the dropdown variation)
+        // var collapsibleElem = document.querySelector('.collapsible');
+        // var collapsibleInstance = M.Collapsible.init(collapsibleElem, options);
 
-  // Or with jQuery
+        // Or with jQuery
 
-  $(document).ready(function(){
-    $('.sidenav').sidenav();
-  });
+        $(document).ready(function () {
+            $('.sidenav').sidenav();
+        });
     </script>
 
     <div class="container">
         <div class="row">
             <ul id="slide-out" class="sidenav">
-                <li><p class="subheader center">Options</p></li>
-                <li><div class="divider"></div></li>
+                <li>
+                    <p class="subheader center">Options</p>
+                </li>
+                <li>
+                    <div class="divider"></div>
+                </li>
                 <li><a class="waves-effect" href="{% url 'index' %}">Home</a></li>
-                <li><div class="divider"></div></li>
+                <li>
+                    <div class="divider"></div>
+                </li>
                 <li><a class="waves-effect" href="{% url 'admin:login' %}">Admin</a></li>
-                <li><div class="divider"></div></li>
+                <li>
+                    <div class="divider"></div>
+                </li>
                 <li><a class="waves-effect" href="{% url 'results' %}">Results</a></li>
-                <li><div class="divider"></div></li>
+                <li>
+                    <div class="divider"></div>
+                </li>
                 <li><a class="waves-effect" href="{% url 'logout' %}">Logout</a></li>
-                <li><div class="divider"></div></li>
+                <li>
+                    <div class="divider"></div>
+                </li>
             </ul>
-            <a href="#" data-target="slide-out" class="sidenav-trigger col l1 m1 s1" style="margin-top: 20px;"><i class="material-icons">menu</i>Options</a>
-          
+            <a href="#" data-target="slide-out" class="sidenav-trigger col l1 m1 s1" style="margin-top: 20px;"><i
+                    class="material-icons">menu</i>Options</a>
+
         </div>
         {% for question in session_questions %}
-            {% if entered_id == question.session_id %}
-            <form action="{% url 'vote' %}" method="post">
-                {% csrf_token %}
-                <div class="row">
-                        <ul class="collection with-header">
-                            
-                            <li class="collection-header"><h4>{{question.content}}
-                                {% for users in question.users_answered.all %}
-                                    {% if users.id == request.user.id %}
-                                    <span class="new badge" data-badge-caption="Already answered"></span>
-                                    {% endif %}
-                                {% endfor %}
-                            </h4>
-                                
-                            </li>
-                            
-                            {% for choice in question.choice_set.all  %}
-                                
-                                <li class="collection-item">
-                                    <p>
-                                        <label>
-                                          <input name="choice" type="radio" value="{{choice.id}}" />
-                                          <span>{{choice.content}} </span>
-                                          <span class="badge blue" >{{choice.vote}}</span>
-                                        </label>
-                                    </p>
-                                </li>
+        {% if entered_id == question.session_id %}
+        <form action="{% url 'vote' %}" method="post">
+            {% csrf_token %}
+            <div class="row">
+                <ul class="collection with-header" style="background: rgba(202, 196, 196, 0.6); border-radius: 30px; color: black;">
+
+                    <li class="collection-header" style="background: rgba(202, 196, 196, 0.6);">
+                        <h4>{{question.content}}
+                            {% for users in question.users_answered.all %}
+                            {% if users.id == request.user.id %}
+                            <span class="new badge" data-badge-caption="Already answered"></span>
+                            {% endif %}
                             {% endfor %}
-                            <li class="collection-item">
-                                <button class="btn waves-effect waves-light" type="submit" name="action">Submit
-                                <i class="material-icons right">send</i>
-                                </button>
-                            </li>
-                        </ul>
-                </div>
-            </form>
-            {% endif %}
+                        </h4>
+
+                    </li>
+
+                    {% for choice in question.choice_set.all %}
+
+                    <li class="collection-item" style="background: rgba(202, 196, 196, 0.6);">
+                        <p>
+                            <label style="color: black;">
+                                <input name="choice" type="radio" value="{{choice.id}}"/>
+                                <span>{{choice.content}} </span>
+                                <span class="badge blue" style="color: black;">{{choice.vote}}</span>
+                            </label>
+                        </p>
+                    </li>
+                    {% endfor %}
+                    <li class="collection-item" style="background: rgba(202, 196, 196, 0.6);">
+                        <button class="btn waves-effect waves-light" style="border-radius: 20px;" type="submit" name="action">Submit
+                            <i class="material-icons right">check</i>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </form>
+        {% endif %}
         {% endfor %}
     </div>
 
-    <button id="mybtn" onclick="topFunction()" class="btn-floating btn-large" style="position: fixed; top: 90%; left:80%; color: red;">
+    <button id="mybtn" onclick="topFunction()" class="btn-floating btn-large"
+        style="position: fixed; top: 90%; left:90%; color: red;">
         <i class="material-icons">arrow_upward</i>
-        </button>
-    
-        <script>
-            // Get the button
-            let mybutton = document.getElementById("myBtn");
-            
-            // When the user scrolls down 20px from the top of the document, show the button
-            window.onscroll = function() {scrollFunction()};
-            
-            function scrollFunction() {
-              if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    </button>
+
+    <script>
+        // Get the button
+        let mybutton = document.getElementById("myBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
                 mybutton.style.display = "block";
-              } else {
+            } else {
                 mybutton.style.display = "none";
-              }
             }
-            
-            // When the user clicks on the button, scroll to the top of the document
-            function topFunction() {
-              document.body.scrollTop = 0;
-              document.documentElement.scrollTop = 0;
-            }
-            </script>
-    
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+
 </body>
+
 </html>

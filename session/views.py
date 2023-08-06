@@ -61,7 +61,7 @@ def CreateSession(request):
     return render(request,'session.html',context)
 
 @login_required(login_url='/login/')
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
+
 def ShowQuestions(request):
     questions=models.Question.objects.all()
     if request.method=='POST':
@@ -74,7 +74,7 @@ def ShowQuestions(request):
     session_valid=False
     all_sessions=session_models.SessionsCreated.objects.all()
     for ids in all_sessions:
-        if ids.session_id==entered_id:
+        if ids.session_id==context['entered_id']:
             session_valid=True
             break   
     if not session_valid:
@@ -95,7 +95,6 @@ def Results(request):
     return render(request,'results.html',context)
 
 @login_required(login_url='/login/')
-@cache_control(no_cache=True, must_revalidate=True, no_store=True)
 def vote(request):
     has_answered=False
     try:   
